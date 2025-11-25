@@ -25,7 +25,6 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel: MusicViewModel by viewModels()
 
-    // Permission launcher for audio files
     private val audioPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -40,7 +39,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    // Permission launcher for notifications (API 33+)
     private val notificationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -56,7 +54,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Request permissions
         requestPermissions()
 
         setContent {
@@ -66,11 +63,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    /**
-     * Request necessary permissions
-     */
     private fun requestPermissions() {
-        // Request audio permission
         val audioPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             Manifest.permission.READ_MEDIA_AUDIO
         } else {
@@ -82,16 +75,12 @@ class MainActivity : ComponentActivity() {
                 this,
                 audioPermission
             ) == PackageManager.PERMISSION_GRANTED -> {
-                // Permission already granted
                 viewModel.loadSongs()
             }
             else -> {
-                // Request permission
                 audioPermissionLauncher.launch(audioPermission)
             }
         }
-
-        // Request notification permission for API 33+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(
                     this,

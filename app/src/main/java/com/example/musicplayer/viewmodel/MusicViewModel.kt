@@ -15,27 +15,20 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-/**
- * ViewModel for managing music player state and business logic
- */
 class MusicViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = MusicRepository(application)
     private val serviceController = MusicServiceController(application)
 
-    // Songs list state
     private val _songs = MutableStateFlow<List<Song>>(emptyList())
     val songs: StateFlow<List<Song>> = _songs.asStateFlow()
 
-    // Loading state
     private val _isLoading = MutableStateFlow(true)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
-    // Current playing song index
     private val _currentSongIndex = MutableStateFlow(-1)
     val currentSongIndex: StateFlow<Int> = _currentSongIndex.asStateFlow()
 
-    // Combined player state
     val playerState: StateFlow<PlayerState> = combine(
         _songs,
         serviceController.isPlaying,
@@ -61,9 +54,6 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         loadSongs()
     }
 
-    /**
-     * Load all songs from device storage
-     */
     fun loadSongs() {
         viewModelScope.launch {
             _isLoading.value = true
@@ -78,10 +68,6 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
-
-    /**
-     * Play a specific song
-     */
     fun playSong(song: Song) {
         val index = _songs.value.indexOf(song)
         if (index != -1) {
@@ -92,16 +78,10 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    /**
-     * Toggle play/pause
-     */
     fun togglePlayPause() {
         serviceController.togglePlayPause()
     }
 
-    /**
-     * Skip to next song
-     */
     fun skipToNext() {
         val nextIndex = _currentSongIndex.value + 1
         if (nextIndex < _songs.value.size) {
@@ -110,9 +90,6 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    /**
-     * Skip to previous song
-     */
     fun skipToPrevious() {
         val prevIndex = _currentSongIndex.value - 1
         if (prevIndex >= 0) {
@@ -121,16 +98,10 @@ class MusicViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    /**
-     * Seek to specific position
-     */
     fun seekTo(position: Long) {
         serviceController.seekTo(position)
     }
 
-    /**
-     * Clean up resources
-     */
     override fun onCleared() {
         super.onCleared()
         serviceController.release()

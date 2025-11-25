@@ -16,9 +16,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.musicplayer.model.PlayerState
 
-/**
- * Mini player shown at the bottom of the screen
- */
 @Composable
 fun MiniPlayer(
     playerState: PlayerState,
@@ -38,7 +35,6 @@ fun MiniPlayer(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.surface)
         ) {
-            // Progress bar
             if (playerState.duration > 0) {
                 LinearProgressIndicator(
                     progress = { (playerState.currentPosition.toFloat() / playerState.duration.toFloat()).coerceIn(0f, 1f) },
@@ -52,7 +48,6 @@ fun MiniPlayer(
                     .padding(horizontal = 16.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Song info
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
@@ -73,12 +68,10 @@ fun MiniPlayer(
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                // Playback controls
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Previous button
                     IconButton(
                         onClick = onSkipPreviousClick,
                         enabled = playerState.hasPrevious()
@@ -89,7 +82,6 @@ fun MiniPlayer(
                         )
                     }
 
-                    // Play/Pause button
                     FilledIconButton(
                         onClick = onPlayPauseClick,
                         modifier = Modifier.size(48.dp)
@@ -104,7 +96,6 @@ fun MiniPlayer(
                         )
                     }
 
-                    // Next button
                     IconButton(
                         onClick = onSkipNextClick,
                         enabled = playerState.hasNext()

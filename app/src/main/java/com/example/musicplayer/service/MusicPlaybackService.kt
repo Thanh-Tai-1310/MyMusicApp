@@ -11,10 +11,6 @@ import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 import com.example.musicplayer.MainActivity
 
-/**
- * MediaSessionService for handling background music playback
- * This service keeps the player alive even when the app is in background
- */
 class MusicPlaybackService : MediaSessionService() {
 
     private var mediaSession: MediaSession? = null
@@ -26,54 +22,39 @@ class MusicPlaybackService : MediaSessionService() {
         initializeMediaSession()
     }
 
-    /**
-     * Initialize ExoPlayer with audio configuration
-     */
     private fun initializePlayer() {
-        // Configure audio attributes for music playback
         val audioAttributes = AudioAttributes.Builder()
             .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
             .setUsage(C.USAGE_MEDIA)
             .build()
 
-        // Create ExoPlayer instance
         player = ExoPlayer.Builder(this)
             .setAudioAttributes(audioAttributes, true)
             .setHandleAudioBecomingNoisy(true) // Pause when headphones disconnected
             .build()
 
-        // Add listener for player state changes
         player.addListener(object : Player.Listener {
             override fun onPlaybackStateChanged(playbackState: Int) {
                 super.onPlaybackStateChanged(playbackState)
                 when (playbackState) {
                     Player.STATE_IDLE -> {
-                        // Player idle
                     }
                     Player.STATE_BUFFERING -> {
-                        // Buffering
                     }
                     Player.STATE_READY -> {
-                        // Ready to play
                     }
                     Player.STATE_ENDED -> {
-                        // Playback ended
                     }
                 }
             }
 
             override fun onIsPlayingChanged(isPlaying: Boolean) {
                 super.onIsPlayingChanged(isPlaying)
-                // Update notification based on play/pause state
             }
         })
     }
 
-    /**
-     * Initialize MediaSession with notification
-     */
     private fun initializeMediaSession() {
-        // Create intent to open the app when notification is clicked
         val sessionActivityIntent = Intent(this, MainActivity::class.java)
         val sessionActivityPendingIntent = PendingIntent.getActivity(
             this,
@@ -86,22 +67,15 @@ class MusicPlaybackService : MediaSessionService() {
             }
         )
 
-        // Create MediaSession
         mediaSession = MediaSession.Builder(this, player)
             .setSessionActivity(sessionActivityPendingIntent)
             .build()
     }
 
-    /**
-     * Return the MediaSession when system requests it
-     */
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? {
         return mediaSession
     }
 
-    /**
-     * Clean up resources when service is destroyed
-     */
     override fun onDestroy() {
         mediaSession?.run {
             player.release()
@@ -111,13 +85,9 @@ class MusicPlaybackService : MediaSessionService() {
         super.onDestroy()
     }
 
-    /**
-     * Handle task removal (when user swipes away the app from recent apps)
-     */
     override fun onTaskRemoved(rootIntent: Intent?) {
         val player = mediaSession?.player
         if (player?.playWhenReady == false || player?.mediaItemCount == 0) {
-            // Stop service if not playing
             stopSelf()
         }
     }

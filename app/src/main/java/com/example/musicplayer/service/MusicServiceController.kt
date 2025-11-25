@@ -102,9 +102,6 @@ class MusicServiceController(context: Context) {
         }
     }
 
-    /**
-     * Set playlist and start playback
-     */
     fun setPlaylist(songs: List<Song>, startIndex: Int = 0) {
         val mediaItems = songs.map { song ->
             MediaItem.Builder()
@@ -128,24 +125,15 @@ class MusicServiceController(context: Context) {
         }
     }
 
-    /**
-     * Play or resume playback
-     */
     fun play() {
         mediaController?.play()
         updatePosition()
     }
 
-    /**
-     * Pause playback
-     */
     fun pause() {
         mediaController?.pause()
     }
 
-    /**
-     * Toggle play/pause
-     */
     fun togglePlayPause() {
         mediaController?.let {
             if (it.isPlaying) {
@@ -156,30 +144,18 @@ class MusicServiceController(context: Context) {
         }
     }
 
-    /**
-     * Skip to next track
-     */
     fun skipToNext() {
         mediaController?.seekToNext()
     }
 
-    /**
-     * Skip to previous track
-     */
     fun skipToPrevious() {
         mediaController?.seekToPrevious()
     }
 
-    /**
-     * Seek to specific position
-     */
     fun seekTo(position: Long) {
         mediaController?.seekTo(position)
     }
 
-    /**
-     * Play specific song from playlist
-     */
     fun playSongAtIndex(index: Int) {
         mediaController?.apply {
             seekToDefaultPosition(index)
@@ -187,9 +163,6 @@ class MusicServiceController(context: Context) {
         }
     }
 
-    /**
-     * Release resources
-     */
     fun release() {
         MediaController.releaseFuture(controllerFuture ?: return)
         mediaController = null

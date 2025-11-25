@@ -2,19 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Permissions for reading audio files -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
 
-    <!-- Permission for foreground service (required for Media3) -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
 
-    <!-- Permission for notifications (API 33+) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
-    <!-- Wake lock for playback -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
@@ -28,7 +24,6 @@
         android:theme="@style/Theme.MusicPlayer"
         tools:targetApi="31">
 
-        <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -39,7 +34,6 @@
             </intent-filter>
         </activity>
 
-        <!-- MediaSessionService for background playback -->
         <service
             android:name=".service.MusicPlaybackService"
             android:enabled="true"

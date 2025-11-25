@@ -17,9 +17,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.musicplayer.model.Song
 
-/**
- * Composable for displaying the list of songs
- */
 @Composable
 fun SongListScreen(
     songs: List<Song>,
@@ -33,13 +30,11 @@ fun SongListScreen(
     ) {
         when {
             isLoading -> {
-                // Show loading indicator
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center)
                 )
             }
             songs.isEmpty() -> {
-                // Show empty state
                 Text(
                     text = "No songs found on device",
                     style = MaterialTheme.typography.bodyLarge,
@@ -47,10 +42,9 @@ fun SongListScreen(
                 )
             }
             else -> {
-                // Show song list
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(bottom = 80.dp) // Space for mini player
+                    contentPadding = PaddingValues(bottom = 80.dp)
                 ) {
                     items(songs, key = { it.id }) { song ->
                         SongItem(
@@ -65,9 +59,6 @@ fun SongListScreen(
     }
 }
 
-/**
- * Individual song item in the list
- */
 @Composable
 fun SongItem(
     song: Song,
@@ -89,7 +80,6 @@ fun SongItem(
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Album art placeholder
         Box(
             modifier = Modifier
                 .size(56.dp)
@@ -106,7 +96,6 @@ fun SongItem(
 
         Spacer(modifier = Modifier.width(16.dp))
 
-        // Song info
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -133,7 +122,6 @@ fun SongItem(
 
         Spacer(modifier = Modifier.width(8.dp))
 
-        // Duration
         Text(
             text = song.getFormattedDuration(),
             style = MaterialTheme.typography.bodySmall,

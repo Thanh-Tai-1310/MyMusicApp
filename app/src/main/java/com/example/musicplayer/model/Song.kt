@@ -2,9 +2,6 @@ package com.example.musicplayer.model
 
 import android.net.Uri
 
-/**
- * Data class representing a song/audio file
- */
 data class Song(
     val id: Long,
     val title: String,
@@ -14,9 +11,7 @@ data class Song(
     val uri: Uri,
     val albumArtUri: Uri? = null
 ) {
-    /**
-     * Format duration from milliseconds to MM:SS format
-     */
+
     fun getFormattedDuration(): String {
         val totalSeconds = duration / 1000
         val minutes = totalSeconds / 60

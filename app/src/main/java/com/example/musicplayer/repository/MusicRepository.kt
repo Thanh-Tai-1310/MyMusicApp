@@ -10,18 +10,11 @@ import com.example.musicplayer.model.Song
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-/**
- * Repository to fetch audio files from device storage using ContentResolver
- */
 class MusicRepository(private val context: Context) {
 
-    /**
-     * Fetch all audio files from the device
-     */
     suspend fun getAllSongs(): List<Song> = withContext(Dispatchers.IO) {
         val songs = mutableListOf<Song>()
 
-        // Define the columns we want to retrieve
         val projection = arrayOf(
             MediaStore.Audio.Media._ID,
             MediaStore.Audio.Media.TITLE,
@@ -31,20 +24,16 @@ class MusicRepository(private val context: Context) {
             MediaStore.Audio.Media.ALBUM_ID
         )
 
-        // Selection criteria - only music files, exclude ringtones, notifications, alarms
         val selection = "${MediaStore.Audio.Media.IS_MUSIC} != 0"
 
-        // Sort by title
         val sortOrder = "${MediaStore.Audio.Media.TITLE} ASC"
 
-        // Query URI based on Android version
         val collection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             MediaStore.Audio.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
         } else {
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         }
 
-        // Execute query
         val cursor: Cursor? = context.contentResolver.query(
             collection,
             projection,
@@ -69,13 +58,11 @@ class MusicRepository(private val context: Context) {
                 val duration = it.getLong(durationColumn)
                 val albumId = it.getLong(albumIdColumn)
 
-                // Build content URI for the audio file
                 val contentUri = ContentUris.withAppendedId(
                     MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                     id
                 )
 
-                // Build album art URI
                 val albumArtUri = ContentUris.withAppendedId(
                     Uri.parse("content://media/external/audio/albumart"),
                     albumId
@@ -98,9 +85,6 @@ class MusicRepository(private val context: Context) {
         songs
     }
 
-    /**
-     * Get a single song by ID
-     */
     suspend fun getSongById(songId: Long): Song? = withContext(Dispatchers.IO) {
         getAllSongs().find { it.id == songId }
     }
