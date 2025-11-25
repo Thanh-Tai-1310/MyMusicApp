@@ -1,54 +1,40 @@
 # MyMusicApp
 
-MyMusicApp là một ứng dụng quản lý và nghe nhạc cá nhân được xây dựng nhằm giúp người dùng dễ dàng tổ chức, tìm kiếm và thưởng thức các bản nhạc yêu thích của mình. Ứng dụng hỗ trợ nhiều tính năng như sắp xếp danh sách nhạc, tìm kiếm, tạo playlist, và phát nhạc trực tiếp.
+MyMusicApp là ứng dụng Android viết bằng Kotlin để quản lý và phát nhạc cá nhân. Ứng dụng sử dụng ExoPlayer để phát nhạc và Firebase để đồng bộ dữ liệu (Auth / Firestore / Storage).
 
-## Tính năng nổi bật
+## Tính năng chính
+- Quản lý thư viện nhạc và playlist
+- Tìm kiếm cơ bản
+- Phát nhạc nền (ExoPlayer) với notification
+- Đồng bộ dữ liệu qua Firebase
 
-- **Quản lý thư viện nhạc cá nhân**: Dễ dàng thêm, xóa, hoặc chỉnh sửa thông tin bài hát/danh sách phát.
-- **Tìm kiếm và lọc nhạc**: Tìm kiếm theo tên bài hát, nghệ sĩ, album hoặc thể loại.
-- **Tạo và quản lý playlist**: Tạo playlist tùy ý, thêm/xóa bài hát nhanh chóng.
-- **Phát nhạc**: Hỗ trợ phát nhạc liên tục, lặp lại, ngẫu nhiên.
-- **Giao diện thân thiện**: Thiết kế trực quan phù hợp cho cả desktop và mobile.
-- **Đồng bộ dữ liệu**: (Nếu có) Đăng nhập và đồng bộ bộ sưu tập nhạc qua nhiều thiết bị.
+## Công nghệ
+- Kotlin
+- ExoPlayer
+- Firebase (Auth, Firestore, Storage)
+- Android Studio, Gradle, AndroidX
 
-## Công nghệ sử dụng
+## Cài đặt nhanh
+1. Clone:
+   git clone https://github.com/Thanh-Tai-1310/MyMusicApp.git
 
-- Language: _Điền ngôn ngữ sử dụng, ví dụ: JavaScript/TypeScript, Python, Java, v.v._
-- Framework: _React Native/Flutter (mobile) hoặc React/Vue/Angular (web), v.v._
-- Backend: _Node.js/Express/Python Django/Flask, v.v._ (nếu có)
-- Database: _MongoDB/MySQL/PostgreSQL, v.v._ (nếu có)
+2. Mở project bằng Android Studio.
 
-## Cài đặt và sử dụng
+3. Nếu dùng Firebase: thêm `google-services.json` vào thư mục `app/`.
 
-1. **Clone repository**
-    ```bash
-    git clone https://github.com/Thanh-Tai-1310/MyMusicApp.git
-    ```
-2. **Cài đặt thư viện phụ thuộc**
-    ```bash
-    cd MyMusicApp
-    npm install
-    ```
-3. **Chạy ứng dụng**
-    ```bash
-    npm start
-    ```
-    (Hoặc chạy lệnh tương ứng với công nghệ bạn sử dụng)
+4. Sync Gradle và chạy trên emulator hoặc device.
 
-4. **Truy cập giao diện**
-    - Mở trình duyệt và truy cập: `http://localhost:3000` (mặc định)
+## Lệnh hữu ích
+- Build debug: ./gradlew assembleDebug
+- Tạo AAB: ./gradlew bundleRelease
+
+## Quyền cần thiết
+- INTERNET
+- FOREGROUND_SERVICE
+- READ_EXTERNAL_STORAGE / READ_MEDIA_AUDIO (tùy Android version)
 
 ## Đóng góp
+Fork → tạo branch → commit → PR. Vui lòng mô tả thay đổi ngắn gọn.
 
-Chào mừng mọi ý kiến đóng góp và pull request!  
-Vui lòng fork project và tạo pull request nếu bạn muốn đóng góp mã nguồn hoặc cải tiến tính năng.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-**Liên hệ**  
-Tác giả: [Thanh-Tai-1310](https://github.com/Thanh-Tai-1310)  
-Email: your-email@example.com
+## Liên hệ
+Tác giả: Thanh-Tai-1310 — https://github.com/Thanh-Tai-1310
